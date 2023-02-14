@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb:10.10.2
+    container_name: db-mms
+    restart: always
+    # env_file:
+    #   - 
+    environment:
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    volumes:
+      - ../volumes/db/data:/var/lib/mysql
+        # - /etc/mysql/my.cnf:/etc/mysql/my.cnf 
+    ports:
+      - ${DB_PORT}:${DB_CONTAINER_PORT}
+    expose:
+      - ${DB_CONTAINER_PORT}
+    networks:
+      - mms-dev-net
+
+networks:
+  mms-dev-net:
+    driver: bridge
